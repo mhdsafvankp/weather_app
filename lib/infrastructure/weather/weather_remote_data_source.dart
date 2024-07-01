@@ -1,10 +1,9 @@
 import 'package:weather_app/domain/weather/weather_model.dart';
-import 'package:weather_app/domain/weather/weather_remote_repository.dart';
-
 import '../../domain/common/api.dart';
-import '../core/weather_api_client.dart';
+import '../../domain/weather/weather_repository.dart';
+import '../core/dio_api_client.dart';
 
-class WeatherRemoteDataSource implements WeatherRemoteRepository {
+class WeatherRemoteDataSource implements WeatherRepository {
 
   DioApiClient client;
   WeatherRemoteDataSource({required this.client});

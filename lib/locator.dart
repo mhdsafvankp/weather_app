@@ -6,11 +6,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather_app/application/bloc/auth_bloc.dart';
 import 'package:weather_app/application/bloc/weather_bloc.dart';
 import 'package:weather_app/infrastructure/auth/firebase_auth_repository_impl.dart';
-import 'package:weather_app/routes/app_router.dart';
 
 import 'application/bloc/splash_bloc.dart';
-import 'domain/common/constants.dart';
-import 'infrastructure/core/weather_api_client.dart';
+import 'domain/weather/weather_model.dart';
+import 'infrastructure/core/dio_api_client.dart';
+import 'infrastructure/core/hive_service.dart';
 import 'infrastructure/location/location_repository_impl.dart';
 import 'infrastructure/weather/weather_local_data_source.dart';
 import 'infrastructure/weather/weather_remote_data_source.dart';
@@ -19,10 +19,19 @@ import 'infrastructure/weather/weather_repository_impl.dart';
 final locator = GetIt.instance;
 
 Future<void> initLocator() async {
-  // initialize the Hive locations
+  // initialize the Hive locations and adapters
   await Hive.initFlutter();
-  // created the hive box
-  locator.registerSingleton<Box>(await Hive.openBox(weather));
+  // registering the adapters 
+  Hive.registerAdapter(WeatherModelAdapter());
+  Hive.registerAdapter(MainAdapter());
+  Hive.registerAdapter(SysAdapter());
+  Hive.registerAdapter(WindAdapter());
+
+  // Register Hive Services and initialize them
+  final weatherHiveService = HiveService<WeatherModel>('weatherBox');
+  await weatherHiveService.init();
+  locator.registerSingleton<HiveService<WeatherModel>>(weatherHiveService);
+
 
   //Bloc
   locator
@@ -43,7 +52,7 @@ Future<void> initLocator() async {
       () => LocationRepositoryImpl());
   // localDataSource
   locator.registerLazySingleton<WeatherLocalDataSource>(
-          () => WeatherLocalDataSource());
+          () => WeatherLocalDataSource(hiveService: weatherHiveService));
   // remoteDataSource
   locator.registerLazySingleton<WeatherRemoteDataSource>(
           () => WeatherRemoteDataSource(client: locator()));

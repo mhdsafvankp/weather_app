@@ -1,7 +1,19 @@
+import 'package:hive/hive.dart';
+
+part 'weather_model.g.dart';
+
+@HiveType(typeId: 0)
 class WeatherModel {
+  @HiveField(0)
   final Main main;
+
+  @HiveField(1)
   final Wind wind;
+
+  @HiveField(2)
   final Sys sys;
+
+  @HiveField(3)
   final String name;
 
   WeatherModel({
@@ -26,10 +38,18 @@ class WeatherModel {
       };
 }
 
+@HiveType(typeId: 1)
 class Main {
+  @HiveField(0)
   final double temp;
+
+  @HiveField(1)
   final int humidity;
+
+  @HiveField(2)
   final double tempMin;
+
+  @HiveField(3)
   final double tempMax;
 
   Main({
@@ -54,7 +74,9 @@ class Main {
       };
 }
 
+@HiveType(typeId: 2)
 class Sys {
+  @HiveField(0)
   final String country;
 
   Sys({
@@ -70,7 +92,9 @@ class Sys {
       };
 }
 
+@HiveType(typeId: 3)
 class Wind {
+  @HiveField(0)
   final double speed;
 
   Wind({

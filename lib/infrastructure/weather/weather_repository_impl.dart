@@ -15,10 +15,10 @@ class WeatherRepositoryImpl implements WeatherRemoteRepository {
   Future<WeatherModel> getCurrentLocationWeather(double lat, double lon) async {
     try {
       final weather = await remoteDataSource.getCurrentLocationWeather(lat, lon);
-      //await localDataSource.cacheWeather(weather);  // TODO:
+      await localDataSource.cacheWeather(weather);
       return weather;
     }catch (e){
-      final cachedWeather = await localDataSource.getLastSavedWeather();
+      final cachedWeather = localDataSource.getLastSavedWeather();
       if(cachedWeather != null){
         return cachedWeather;
       } else {
@@ -31,10 +31,10 @@ class WeatherRepositoryImpl implements WeatherRemoteRepository {
   Future<WeatherModel> getWeather(String cityName) async{
     try {
       final weather = await remoteDataSource.getWeather(cityName);
-      await localDataSource.cacheWeather(weather);  // TODO:
+      await localDataSource.cacheWeather(weather);
       return weather;
     }catch (e){
-      final cachedWeather = await localDataSource.getLastSavedWeather();
+      final cachedWeather = localDataSource.getLastSavedWeather();
       if(cachedWeather != null){
         return cachedWeather;
       } else {
