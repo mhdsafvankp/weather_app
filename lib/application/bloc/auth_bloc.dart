@@ -30,8 +30,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _checkAuthRequestHandler(
       CheckAuthStatus event, Emitter<AuthState> emit) async {
-    var isSign = await firebaseAuthRepositoryImpl.isSignedIn();
-    isSign ? Authenticated() : emit(UnAuthenticated());
+    var isSign = firebaseAuthRepositoryImpl.isLoggedIn();
+    isSign ? emit(Authenticated()) : emit(UnAuthenticated());
   }
 
   _signOutRequestHandler(
@@ -45,6 +45,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       var isSign = await firebaseAuthRepositoryImpl.signInWithEmail(
           event.email, event.password);
+      // saving sign-in preference
+      firebaseAuthRepositoryImpl.setLoggedIn(isSign);
 
       isSign ? emit(Authenticated()) : emit(AuthError(msg: 'Login Error'));
     } on FirebaseAuthException catch (e) {

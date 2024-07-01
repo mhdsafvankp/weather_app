@@ -32,6 +32,10 @@ Future<void> initLocator() async {
   await weatherHiveService.init();
   locator.registerSingleton<HiveService<WeatherModel>>(weatherHiveService);
 
+  final authHiveService = HiveService<bool>('authBox');
+  await authHiveService.init();
+  locator.registerSingleton<HiveService<bool>>(authHiveService);
+
 
   //Bloc
   locator
@@ -43,7 +47,7 @@ Future<void> initLocator() async {
   // Repositories
   // firebase
   locator.registerLazySingleton<FirebaseAuthRepositoryImpl>(
-      () => FirebaseAuthRepositoryImpl(firebaseAuth: locator()));
+      () => FirebaseAuthRepositoryImpl(firebaseAuth: locator(), hiveService: authHiveService));
   // WeatherRepository
   locator.registerLazySingleton<WeatherRepositoryImpl>(
       () => WeatherRepositoryImpl(localDataSource: locator(), remoteDataSource: locator()));

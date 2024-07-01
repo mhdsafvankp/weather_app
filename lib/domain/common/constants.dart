@@ -4,4 +4,5 @@ const String weather = 'weather';
 
 
 // messages
-const String checkingTheWeather = 'Cheking the Weather';
+const String checkingTheWeather = 'Checking the Weather';
+const String loading = 'loading';

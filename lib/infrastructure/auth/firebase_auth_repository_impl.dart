@@ -1,18 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:weather_app/domain/Auth/auth_repository.dart';
+import 'package:weather_app/domain/common/logger.dart';
+
+import '../core/hive_service.dart';
 
 class FirebaseAuthRepositoryImpl implements AuthRepository {
 
+  final authHiveKey = 'loggedIn';
   final FirebaseAuth firebaseAuth;
+  final HiveService<bool> hiveService;
 
-  FirebaseAuthRepositoryImpl({required this.firebaseAuth});
+  FirebaseAuthRepositoryImpl({required this.firebaseAuth, required this.hiveService});
 
-
-  @override
-  Future<bool> isSignedIn() async {
-    final user = firebaseAuth.currentUser;
-    return user != null;
-  }
 
   @override
   Future<bool> signInWithEmail(String email, String password) async {
@@ -39,5 +38,18 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  bool isLoggedIn() {
+    logPrint('isLoggedIn called with ${hiveService.getData(authHiveKey)}');
+    return hiveService.getData(authHiveKey) ?? false;
+  }
+
+
+  @override
+  Future<void> setLoggedIn(bool loggedIn) async{
+    logPrint('setLoggedIn called with $loggedIn');
+    await hiveService.saveData(authHiveKey, loggedIn);
   }
 }
