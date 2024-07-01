@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/application/bloc/auth_bloc.dart';
+import 'package:weather_app/application/bloc/splash_bloc.dart';
 import 'package:weather_app/routes/app_router.dart';
 
 import 'locator.dart' as di;
@@ -14,6 +15,9 @@ void main() async {
   runApp(MultiBlocProvider(providers: [
     BlocProvider<AuthBloc>(
       create: (BuildContext context) => locator<AuthBloc>(),
+    ),
+    BlocProvider<SplashBloc>(
+      create: (BuildContext context) => locator<SplashBloc>(),
     )
   ], child: MyApp()));
 }

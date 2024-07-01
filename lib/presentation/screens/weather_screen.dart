@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class WeatherScreen extends StatelessWidget {
-  const WeatherScreen({super.key});
+  const WeatherScreen({Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

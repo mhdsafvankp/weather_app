@@ -4,8 +4,11 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather_app/application/bloc/auth_bloc.dart';
 import 'package:weather_app/infrastructure/auth/firebase_auth_repository_impl.dart';
+import 'package:weather_app/routes/app_router.dart';
 
-import 'common/constants.dart';
+import 'application/bloc/splash_bloc.dart';
+import 'domain/common/constants.dart';
+
 
 final locator = GetIt.instance;
 
@@ -18,6 +21,8 @@ Future<void> initLocator() async {
   //Bloc
   locator
       .registerFactory(() => AuthBloc(firebaseAuthRepositoryImpl: locator()));
+  locator
+      .registerFactory(() => SplashBloc());
 
   // Repository
   locator.registerLazySingleton<FirebaseAuthRepositoryImpl>(
