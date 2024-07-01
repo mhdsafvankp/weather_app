@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/application/bloc/auth_bloc.dart';
 import 'package:weather_app/application/bloc/splash_bloc.dart';
+import 'package:weather_app/application/bloc/weather_bloc.dart';
 import 'package:weather_app/routes/app_router.dart';
 
 import 'locator.dart' as di;
@@ -18,6 +19,9 @@ void main() async {
     ),
     BlocProvider<SplashBloc>(
       create: (BuildContext context) => locator<SplashBloc>(),
+    ),
+    BlocProvider<WeatherBloc>(
+      create: (BuildContext context) => locator<WeatherBloc>(),
     )
   ], child: MyApp()));
 }

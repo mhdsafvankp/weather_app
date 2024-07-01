@@ -6,7 +6,7 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.labelString,
-      this.type = ValidateType.non});
+      this.type = ValidateType.none});
 
   final TextEditingController controller;
   final String labelString;

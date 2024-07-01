@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-enum ValidateType { email, password, non }
+enum ValidateType { email, password, none }
 
 TextInputType? getInputType(ValidateType type) {
   switch (type) {
@@ -8,7 +8,7 @@ TextInputType? getInputType(ValidateType type) {
        return TextInputType.emailAddress;
     case ValidateType.password:
       return TextInputType.visiblePassword;
-    case ValidateType.non:
+    case ValidateType.none:
       return TextInputType.text;
   }
 }
@@ -31,7 +31,7 @@ String? customValidator(String value, ValidateType type) {
         return 'minimum 6 length is required';
       }
       return null;
-    case ValidateType.non:
+    case ValidateType.none:
       return null;
   }
 }
