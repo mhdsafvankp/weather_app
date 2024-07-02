@@ -1,16 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/presentation/bloc/events/auth_event.dart';
-import 'package:weather_app/presentation/bloc/states/auth_state.dart';
+import 'package:weather_app/application/blocs/splash_bloc/splash_bloc.dart';
+import 'package:weather_app/domain/common/logger.dart';
+import 'package:weather_app/application/blocs/splash_bloc/splash_event.dart';
+import 'package:weather_app/application/blocs/splash_bloc/splash_state.dart';
 import 'package:weather_app/routes/app_router.dart';
 
-import '../../application/bloc/auth_bloc.dart';
-import '../../locator.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}): super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     print('initState : initState');
-    context.read<AuthBloc>().add(CheckAuthStatus());
+    context.read<SplashBloc>().add(LoadSplashScreen());
   }
 
 
@@ -31,18 +31,25 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     print('build : build');
     return Scaffold(
+      backgroundColor: Colors.blue[100],
         body: SafeArea(
-            child: BlocListener<AuthBloc, AuthState>(
+            child: BlocListener<SplashBloc, SplashState>(
                 listener: (context, state) {
-                  print('AuthState : ${state.runtimeType}');
-                  if (state is Authenticated) {
-                    AutoRouter.of(context).push(WeatherRoute());
-                  } else if (state is UnAuthenticated) {
-                    AutoRouter.of(context).push(AuthRoute());
-                  } else if(state is AuthError){
-                    print('AuthError : ${state.msg}');
+                  logPrint('BlocListener -> SplashBloc state: ${state.runtimeType}');
+                   if (state is LoadedSplash) {
+                    AutoRouter.of(context).replace(AuthLoginRoute());
                   }
                 },
-                child: Center(child: CircularProgressIndicator()))));
+                child:  Center(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.cloud, size: 150, color: Colors.white,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Weather APP', style: Theme.of(context).textTheme.headlineMedium,),
+                    )
+                  ],
+                )))
+        ));
   }
 }

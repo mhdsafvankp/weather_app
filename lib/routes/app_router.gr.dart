@@ -15,10 +15,29 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    AuthRoute.name: (routeData) {
+    AuthLoginRoute.name: (routeData) {
+      final args = routeData.argsAs<AuthLoginRouteArgs>(
+          orElse: () => const AuthLoginRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const AuthScreen(),
+        child: AuthLoginScreen(key: args.key),
+      );
+    },
+    AuthSignUpRoute.name: (routeData) {
+      final args = routeData.argsAs<AuthSignUpRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AuthSignUpScreen(
+          key: args.key,
+          email: args.email,
+          password: args.password,
+        ),
+      );
+    },
+    LocationDetailsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LocationDetailsScreen(),
       );
     },
     SplashRoute.name: (routeData) {
@@ -37,15 +56,87 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [AuthScreen]
-class AuthRoute extends PageRouteInfo<void> {
-  const AuthRoute({List<PageRouteInfo>? children})
-      : super(
-          AuthRoute.name,
+/// [AuthLoginScreen]
+class AuthLoginRoute extends PageRouteInfo<AuthLoginRouteArgs> {
+  AuthLoginRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AuthLoginRoute.name,
+          args: AuthLoginRouteArgs(key: key),
           initialChildren: children,
         );
 
-  static const String name = 'AuthRoute';
+  static const String name = 'AuthLoginRoute';
+
+  static const PageInfo<AuthLoginRouteArgs> page =
+      PageInfo<AuthLoginRouteArgs>(name);
+}
+
+class AuthLoginRouteArgs {
+  const AuthLoginRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AuthLoginRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [AuthSignUpScreen]
+class AuthSignUpRoute extends PageRouteInfo<AuthSignUpRouteArgs> {
+  AuthSignUpRoute({
+    Key? key,
+    required String email,
+    required String password,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AuthSignUpRoute.name,
+          args: AuthSignUpRouteArgs(
+            key: key,
+            email: email,
+            password: password,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthSignUpRoute';
+
+  static const PageInfo<AuthSignUpRouteArgs> page =
+      PageInfo<AuthSignUpRouteArgs>(name);
+}
+
+class AuthSignUpRouteArgs {
+  const AuthSignUpRouteArgs({
+    this.key,
+    required this.email,
+    required this.password,
+  });
+
+  final Key? key;
+
+  final String email;
+
+  final String password;
+
+  @override
+  String toString() {
+    return 'AuthSignUpRouteArgs{key: $key, email: $email, password: $password}';
+  }
+}
+
+/// generated route for
+/// [LocationDetailsScreen]
+class LocationDetailsRoute extends PageRouteInfo<void> {
+  const LocationDetailsRoute({List<PageRouteInfo>? children})
+      : super(
+          LocationDetailsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LocationDetailsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
