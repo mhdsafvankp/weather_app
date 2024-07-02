@@ -15,3 +15,14 @@ class WeatherErrorState extends WeatherState{
   final String msg;
   WeatherErrorState({required this.msg});
 }
+
+class UpdateLocationDetailsState extends WeatherState{
+  List<String> location;
+  WeatherModel? model;
+  UpdateLocationDetailsState({required this.location, this.model});
+}
+
+class SearchCompletedState extends WeatherState{
+  WeatherModel model;
+  SearchCompletedState({required this.model});
+}

@@ -27,19 +27,25 @@ class WeatherRepositoryImpl implements WeatherRemoteRepository {
     }
   }
 
+
   @override
-  Future<WeatherModel> getWeather(String cityName) async{
+  Future<WeatherModel?> searchWeatherByLocation(String cityName) async {
     try {
       final weather = await remoteDataSource.getWeather(cityName);
       await localDataSource.cacheWeather(weather);
       return weather;
-    }catch (e){
-      final cachedWeather = localDataSource.getLastSavedWeather();
-      if(cachedWeather != null){
-        return cachedWeather;
-      } else {
-        throw Exception('Failed to load weather');
-      }
+    } catch (e){
+      return null;
+    }
+  }
+
+  @override
+  Future<WeatherModel> getLastSavedWeather() async{
+    final cachedWeather = localDataSource.getLastSavedWeather();
+    if(cachedWeather != null){
+      return cachedWeather;
+    } else {
+      throw Exception('Failed to load weather');
     }
   }
 }

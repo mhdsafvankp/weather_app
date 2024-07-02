@@ -34,7 +34,9 @@ class WeatherRemoteDataSource implements WeatherRepository {
 
     if(response.statusCode == 200){
       return WeatherModel.fromJson(response.data);
-    } else {
+    } else if(response.statusCode == 404){
+      throw Exception("city not found");
+    }else {
       throw Exception('Failed to load weather');
     }
   }

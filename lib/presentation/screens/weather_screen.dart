@@ -5,11 +5,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/application/bloc/auth_bloc.dart';
 import 'package:weather_app/application/bloc/weather_bloc.dart';
+import 'package:weather_app/domain/common/logger.dart';
 import 'package:weather_app/presentation/bloc/events/weather_event.dart';
 import 'package:weather_app/presentation/bloc/states/auth_state.dart';
 import 'package:weather_app/presentation/bloc/states/weather_state.dart';
 import 'package:weather_app/presentation/widgets/custom_text_button.dart';
 import '../../domain/common/constants.dart';
+import '../../domain/weather/weather_model.dart';
 import '../../routes/app_router.dart';
 import '../bloc/events/auth_event.dart';
 import '../widgets/submit_button.dart';
@@ -110,7 +112,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               child: SubmitButton(
-                                onPressed: () {},
+                                onPressed: () async{
+                                  var result = await AutoRouter.of(context)
+                                      .push(const LocationDetailsRoute());
+                                  context.read<WeatherBloc>().add(
+                                      UpdateSearchedWeather(
+                                          model: result is WeatherModel
+                                              ? result
+                                              : null));
+                                },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -155,7 +165,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           ],
                         ),
                       );
-                    } else if (state is WeatherErrorState) {
+                    }
+                    else if (state is WeatherErrorState) {
                       return Text(state.msg);
                     } else {
                       return const Column(

@@ -34,6 +34,12 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    LocationDetailsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LocationDetailsScreen(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -119,6 +125,20 @@ class AuthSignUpRouteArgs {
   String toString() {
     return 'AuthSignUpRouteArgs{key: $key, email: $email, password: $password}';
   }
+}
+
+/// generated route for
+/// [LocationDetailsScreen]
+class LocationDetailsRoute extends PageRouteInfo<void> {
+  const LocationDetailsRoute({List<PageRouteInfo>? children})
+      : super(
+          LocationDetailsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LocationDetailsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
