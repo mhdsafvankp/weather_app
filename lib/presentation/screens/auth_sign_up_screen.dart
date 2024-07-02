@@ -42,7 +42,9 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.blue[100],
         appBar: AppBar(
+          backgroundColor: Colors.blue[100],
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -111,7 +113,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
           },
           listener: (BuildContext context, AuthState state) {
             logPrint('AuthSignUpScreen AuthBloc state:${state.runtimeType}');
-            if (state is AuthError) {
+            if (state is AuthSignUpError) {
               FocusManager.instance.primaryFocus?.unfocus();
               showSnackBar(context, state.msg);
             } else if (state is SignUpCompleted) {

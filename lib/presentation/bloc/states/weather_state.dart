@@ -26,3 +26,8 @@ class SearchCompletedState extends WeatherState{
   WeatherModel model;
   SearchCompletedState({required this.model});
 }
+
+class LocationSearchErrorState extends WeatherState{
+  final String msg;
+  LocationSearchErrorState({required this.msg});
+}

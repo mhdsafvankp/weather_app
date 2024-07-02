@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:weather_app/domain/common/app_exceptions.dart';
 import 'package:weather_app/domain/weather/weather_model.dart';
 import 'package:weather_app/infrastructure/weather/weather_local_data_source.dart';
 import 'package:weather_app/infrastructure/weather/weather_remote_data_source.dart';
@@ -22,7 +25,11 @@ class WeatherRepositoryImpl implements WeatherRemoteRepository {
       if(cachedWeather != null){
         return cachedWeather;
       } else {
-        throw Exception('Failed to load weather');
+        if(e is AppException){
+          throw AppException(message: e.message);
+        } else {
+          throw AppException();
+        }
       }
     }
   }
@@ -34,7 +41,9 @@ class WeatherRepositoryImpl implements WeatherRemoteRepository {
       final weather = await remoteDataSource.getWeather(cityName);
       await localDataSource.cacheWeather(weather);
       return weather;
-    } catch (e){
+    } on AppException catch(e){
+      throw AppException(message: e.message);
+    } catch (e) {
       return null;
     }
   }
@@ -45,7 +54,7 @@ class WeatherRepositoryImpl implements WeatherRemoteRepository {
     if(cachedWeather != null){
       return cachedWeather;
     } else {
-      throw Exception('Failed to load weather');
+      throw AppException();
     }
   }
 }

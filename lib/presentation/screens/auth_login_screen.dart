@@ -30,7 +30,6 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
 
   final passController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
@@ -39,93 +38,94 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BlocConsumer<AuthBloc, AuthState>(
-      builder: (BuildContext context, AuthState state){
-        if(state is UnAuthenticated){
-          return SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 25),
-                        child: Text(
-                          'Login',
-                          style: Theme.of(context).textTheme.displayMedium,
+    return Scaffold(
+        backgroundColor: Colors.blue[100],
+        body: BlocConsumer<AuthBloc, AuthState>(
+          builder: (BuildContext context, AuthState state) {
+            if (state is AuthLoading) {
+              return Center(
+                child: const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text('$loading...'),
+                    )
+                  ],
+                ),
+              );
+            }
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 25),
+                          child: Text(
+                            'Login',
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
                         ),
-                      ),
-                      CustomTextField(
-                        controller: emailController,
-                        labelString: 'Email',
-                        type: ValidateType.email,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, bottom: 16),
-                        child: CustomTextField(
-                          controller: passController,
-                          labelString: 'Password',
-                          type: ValidateType.password,
+                        CustomTextField(
+                          controller: emailController,
+                          labelString: 'Email',
+                          type: ValidateType.email,
                         ),
-                      ),
-                      SubmitButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              logPrint('no error');
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16, bottom: 16),
+                          child: CustomTextField(
+                            controller: passController,
+                            labelString: 'Password',
+                            type: ValidateType.password,
+                          ),
+                        ),
+                        SubmitButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                logPrint('no error');
 
-                              // SingInRequested if no form errors
-                              context.read<AuthBloc>().add(SingInRequested(
-                                  email: emailController.text,
-                                  password: passController.text));
-                            } else {
-                              logPrint('there is an error!!');
-                            }
+                                // SingInRequested if no form errors
+                                context.read<AuthBloc>().add(SingInRequested(
+                                    email: emailController.text,
+                                    password: passController.text));
+                              } else {
+                                logPrint('there is an error!!');
+                              }
+                            },
+                            text: 'Sign In'),
+                        CustomTextButton(
+                          onPressed: () {
+                            context.read<AuthBloc>().add(LoadSignUpEvent(
+                                emailController.text, passController.text));
                           },
-                          text: 'Sign In'),
-                      CustomTextButton(
-                        onPressed: () {
-                          context.read<AuthBloc>().add(LoadSignUpEvent(
-                              emailController.text, passController.text));
-                        },
-                        text: 'Sign Up',
-                      )
-                    ],
+                          text: 'Sign Up',
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        } else {
-          return Center(
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text('$loading...'),
-                )
-              ],
-            ),
-          );
-        }
-      },
-      listener: (BuildContext context, AuthState state) {
-        logPrint('AuthLoginScreen AuthBloc state:${state.runtimeType}');
-        if (state is AuthError) {
-          FocusManager.instance.primaryFocus?.unfocus();
-          logPrint('BlocConsumer AuthError msg:${state.msg}');
-          showSnackBar(context, state.msg);
-        } else if (state is Authenticated) {
-          AutoRouter.of(context).replace(WeatherRoute());
-        } else if (state is AuthSignUpLoaded) {
-          AutoRouter.of(context).push(
-              AuthSignUpRoute(email: state.email, password: state.password));
-        }
-      },
-    ));
+            );
+          },
+          listener: (BuildContext context, AuthState state) {
+            logPrint('AuthLoginScreen AuthBloc state:${state.runtimeType}');
+            if (state is AuthLoginInError) {
+              FocusManager.instance.primaryFocus?.unfocus();
+              logPrint('BlocConsumer AuthError msg:${state.msg}');
+              showSnackBar(context, state.msg);
+            } else if (state is Authenticated) {
+              AutoRouter.of(context).replace(WeatherRoute());
+            } else if (state is AuthSignUpLoaded) {
+              AutoRouter.of(context).push(AuthSignUpRoute(
+                  email: state.email, password: state.password));
+            }
+          },
+        ));
   }
 }

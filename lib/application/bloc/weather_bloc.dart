@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/domain/common/app_exceptions.dart';
 import 'package:weather_app/presentation/bloc/events/weather_event.dart';
 import 'package:weather_app/presentation/bloc/states/weather_state.dart';
 
@@ -39,8 +40,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     if(event.model != null){
       emit(WeatherLoaded(model: event.model!));
     } else {
-      var weather = await weatherRepositoryImpl.getLastSavedWeather();
-      emit(WeatherLoaded(model: weather));
+      try {
+        var weather = await weatherRepositoryImpl.getLastSavedWeather();
+        emit(WeatherLoaded(model: weather));
+      } on AppException catch (e){
+        emit(WeatherErrorState(msg: e.toString()));
+      } catch (e){
+        emit(WeatherErrorState(msg: AppException().message));
+      }
     }
   }
 
@@ -49,12 +56,19 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     if(event.model != null){   // from textFiled
       emit(SearchCompletedState(model: event.model!));
     } else {   // from predefined locations
-      var weather = await weatherRepositoryImpl.searchWeatherByLocation(event.location);
-      if(weather != null){
-        emit(SearchCompletedState(model: weather ));
-      } else {
-        emit(UpdateLocationDetailsState(location: [], model: null));
+      try {
+        var weather = await weatherRepositoryImpl.searchWeatherByLocation(event.location);
+        if(weather != null){
+          emit(SearchCompletedState(model: weather ));
+        } else {
+          emit(LocationSearchErrorState(msg: AppException().message));
+        }
+      } on  AppException catch(e){
+        emit(LocationSearchErrorState(msg: e.message));
+      } catch (e){
+        emit(LocationSearchErrorState(msg: AppException().message));
       }
+
     }
   }
 
@@ -65,12 +79,18 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   _locationSearchEvent(WeatherSearchEvent event, Emitter<WeatherState> emit) async {
     emit(LoaderState());
     if(event.query.length > 3){
-      var weather = await weatherRepositoryImpl.searchWeatherByLocation(event.query);
-      if(weather != null){
-        var locationName = weather.name;
-        emit(UpdateLocationDetailsState(location: [locationName], model: weather));
-      } else {
-        emit(UpdateLocationDetailsState(location: [], model: null));
+      try {
+        var weather = await weatherRepositoryImpl.searchWeatherByLocation(event.query);
+        if(weather != null){
+          var locationName = weather.name;
+          emit(UpdateLocationDetailsState(location: [locationName], model: weather));
+        } else {
+          emit(LocationSearchErrorState(msg: AppException().message));
+        }
+      }on  AppException catch(e){
+        emit(LocationSearchErrorState(msg: e.message));
+      } catch (e){
+        emit(LocationSearchErrorState(msg: AppException().message));
       }
     }
   }
@@ -83,9 +103,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       var weather = await weatherRepositoryImpl.getCurrentLocationWeather(
           location.latitude, location.longitude);
       emit(WeatherLoaded(model: weather));
-    } on Exception catch (e) {
-      // TODO: need to Handle
+    } on AppException catch (e){
       emit(WeatherErrorState(msg: e.toString()));
+    } catch (e) {
+      emit(WeatherErrorState(msg: AppException().message));
     }
   }
 }

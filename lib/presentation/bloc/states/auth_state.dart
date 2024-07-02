@@ -22,7 +22,12 @@ class SignUpCompleted extends AuthState{
 
 class Authenticated extends AuthState{}
 class UnAuthenticated extends AuthState{}
-class AuthError extends AuthState{
+class AuthLoginInError extends AuthState{
   final String msg;
-  AuthError({required this.msg});
+  AuthLoginInError({required this.msg});
+}
+
+class AuthSignUpError extends AuthState{
+  final String msg;
+  AuthSignUpError({required this.msg});
 }

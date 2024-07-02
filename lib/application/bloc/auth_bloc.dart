@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/infrastructure/auth/auth_exceptions.dart';
+import 'package:weather_app/domain/Auth/auth_exceptions.dart';
+import 'package:weather_app/domain/common/app_exceptions.dart';
 import 'package:weather_app/presentation/bloc/events/auth_event.dart';
 import 'package:weather_app/presentation/bloc/states/auth_state.dart';
 
@@ -36,11 +37,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _signOutRequestHandler(
       SingOutRequested event, Emitter<AuthState> emit) async {
-    await firebaseAuthRepositoryImpl.signOut();
+    try {
+      await firebaseAuthRepositoryImpl.signOut();
 
-    // saving sign-in preference
-    firebaseAuthRepositoryImpl.setLoggedIn(false);
-    emit(UnAuthenticated());
+      // saving sign-in preference
+      firebaseAuthRepositoryImpl.setLoggedIn(false);
+      emit(UnAuthenticated());
+    } on AuthenticationException catch (e) {
+      emit(AuthSignUpError(msg: e.message));
+    } on AppException catch(e){
+      emit(AuthSignUpError(msg: e.message));
+    } catch (e) {
+      emit(AuthSignUpError(msg: AppException().message));
+    }
+
   }
 
   _signInRequestHandler(SingInRequested event, Emitter<AuthState> emit) async {
@@ -51,12 +61,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // saving sign-in preference
       firebaseAuthRepositoryImpl.setLoggedIn(isSign);
 
-      isSign ? emit(Authenticated()) : emit(AuthError(msg: 'Login Error'));
-    } on FirebaseAuthException catch (e) {
-      emit(AuthError(
-          msg: LogInWithEmailAndPasswordFailure.fromCode(e.code).message));
-    } catch (_) {
-      emit(AuthError(msg: const LogInWithEmailAndPasswordFailure().message));
+      isSign ? emit(Authenticated()) : emit(AuthLoginInError(msg: 'Login Error'));
+    } on AuthenticationException catch (e) {
+      emit(AuthLoginInError(msg: e.message));
+    } on AppException catch(e){
+      emit(AuthLoginInError(msg: e.message));
+    } catch (e) {
+      emit(AuthLoginInError(msg: AppException().message));
     }
   }
 
@@ -68,12 +79,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       isSign
           ? emit(SignUpCompleted(email: event.email, password: event.password))
-          : emit(AuthError(msg: 'Login Error'));
-    } on FirebaseAuthException catch (e) {
-      emit(AuthError(
-          msg: LogInWithEmailAndPasswordFailure.fromCode(e.code).message));
-    } catch (_) {
-      emit(AuthError(msg: const LogInWithEmailAndPasswordFailure().message));
+          : emit(AuthSignUpError(msg: 'Login Error'));
+    } on AuthenticationException catch (e) {
+      emit(AuthSignUpError(msg: e.message));
+    } on AppException catch(e){
+      emit(AuthSignUpError(msg: e.message));
+    } catch (e) {
+      emit(AuthSignUpError(msg: AppException().message));
     }
   }
 }

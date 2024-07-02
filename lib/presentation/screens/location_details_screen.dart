@@ -41,6 +41,16 @@ class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
   Widget build(BuildContext context) {
     print('build : build');
     return Scaffold(
+        backgroundColor: Colors.blue[100],
+      appBar: AppBar(
+        backgroundColor: Colors.blue[100],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            AutoRouter.of(context).maybePop();
+          },
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -68,9 +78,6 @@ class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
                   builder: (context, state) {
                     if(state is UpdateLocationDetailsState){
                       _locations = state.location;
-                      if(_locations.isEmpty){
-                        return const Text(cityNotFound);
-                      }
                       return Expanded(
                         child: ListView.builder(
                           itemCount: _locations.length,
@@ -78,6 +85,7 @@ class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
                             return ListTile(
                               title: Text(_locations[index]),
                               onTap: () {
+                                FocusManager.instance.primaryFocus?.unfocus();
                                 context.read<WeatherBloc>().add(
                                     SearchedWeatherDetails(
                                         location: _locations[index],
@@ -87,6 +95,9 @@ class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
                           },
                         ),
                       );
+                    }
+                    else if(state is LocationSearchErrorState){
+                      return Text(state.msg);
                     }
                     return const Center(
                       child: Column(

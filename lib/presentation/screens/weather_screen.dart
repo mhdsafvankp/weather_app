@@ -34,12 +34,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100],
       body: Center(
           child: BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is UnAuthenticated) {
-                  AutoRouter.of(context)
-                      .replace(AuthLoginRoute());
+                  AutoRouter.of(context).replace(AuthLoginRoute());
                 }
               },
               child: BlocConsumer<WeatherBloc, WeatherState>(
@@ -78,7 +78,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               child: Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Colors.blue.shade200,
+                                      color: Colors.black38,
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.grey.shade200),
@@ -112,7 +112,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               child: SubmitButton(
-                                onPressed: () async{
+                                onPressed: () async {
                                   var result = await AutoRouter.of(context)
                                       .push(const LocationDetailsRoute());
                                   context.read<WeatherBloc>().add(
@@ -165,8 +165,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           ],
                         ),
                       );
-                    }
-                    else if (state is WeatherErrorState) {
+                    } else if (state is WeatherErrorState) {
                       return Text(state.msg);
                     } else {
                       return const Column(

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:weather_app/domain/Auth/auth_exceptions.dart';
 import 'package:weather_app/domain/Auth/auth_repository.dart';
+import 'package:weather_app/domain/common/app_exceptions.dart';
 import 'package:weather_app/domain/common/logger.dart';
 
 import '../core/hive_service.dart';
@@ -16,17 +20,30 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   @override
   Future<bool> signInWithEmail(String email, String password) async {
     try {
-      UserCredential credential = await firebaseAuth.
-      signInWithEmailAndPassword(email: email, password: password);
+      UserCredential credential = await firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       return (credential.user != null);
+    } on FirebaseAuthException catch (e) {
+      throw AuthenticationException.fromCode(e.code);
+    } on SocketException{
+      throw AppSocketException();
     } catch (e) {
-      rethrow;
+      throw AppException();
     }
   }
 
   @override
   Future<void> signOut() async {
-    await firebaseAuth.signOut();
+    try {
+      await firebaseAuth.signOut();
+    } on FirebaseAuthException catch (e) {
+      throw AuthenticationException.fromCode(e.code);
+    } on SocketException{
+      throw AppSocketException();
+    } catch (e) {
+      throw AppException();
+    }
+
   }
 
   @override
@@ -35,8 +52,12 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       UserCredential credential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       return (credential.user != null);
+    } on FirebaseAuthException catch (e) {
+      throw AuthenticationException.fromCode(e.code);
+    } on SocketException{
+      throw AppSocketException();
     } catch (e) {
-      rethrow;
+      throw AppException();
     }
   }
 

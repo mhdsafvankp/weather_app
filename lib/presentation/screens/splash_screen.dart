@@ -33,6 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     print('build : build');
     return Scaffold(
+      backgroundColor: Colors.blue[100],
         body: SafeArea(
             child: BlocListener<SplashBloc, SplashState>(
                 listener: (context, state) {
@@ -41,7 +42,16 @@ class _SplashScreenState extends State<SplashScreen> {
                     AutoRouter.of(context).replace(AuthLoginRoute());
                   }
                 },
-                child: const Center(child: Text('Splash screen')))
+                child:  Center(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.cloud, size: 150, color: Colors.white,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Weather APP', style: Theme.of(context).textTheme.headlineMedium,),
+                    )
+                  ],
+                )))
         ));
   }
 }
