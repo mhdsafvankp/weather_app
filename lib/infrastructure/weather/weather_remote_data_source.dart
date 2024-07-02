@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:weather_app/domain/common/app_exceptions.dart';
-import 'package:weather_app/domain/weather/weather_model.dart';
+import 'package:weather_app/domain/weather/entities/weather_model.dart';
 import '../../domain/common/api.dart';
-import '../../domain/weather/weather_repository.dart';
+import '../../domain/weather/repos/weather_repository.dart';
 import '../core/dio_api_client.dart';
 
 class WeatherRemoteDataSource implements WeatherRepository {

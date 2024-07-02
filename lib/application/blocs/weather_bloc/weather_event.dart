@@ -1,5 +1,5 @@
 
-import '../../../domain/weather/weather_model.dart';
+import '../../../domain/weather/entities/weather_model.dart';
 
 abstract class WeatherEvent{}
 

@@ -1,6 +1,6 @@
 import 'package:weather_app/domain/common/logger.dart';
-import 'package:weather_app/domain/weather/weather_local_repository.dart';
-import 'package:weather_app/domain/weather/weather_model.dart';
+import 'package:weather_app/domain/weather/repos/weather_local_repository.dart';
+import 'package:weather_app/domain/weather/entities/weather_model.dart';
 import '../core/hive_service.dart';
 
 class WeatherLocalDataSource implements WeatherLocalRepository {

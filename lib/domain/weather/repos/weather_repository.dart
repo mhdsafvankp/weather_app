@@ -1,5 +1,5 @@
 
-import 'package:weather_app/domain/weather/weather_model.dart';
+import 'package:weather_app/domain/weather/entities/weather_model.dart';
 
 abstract class WeatherRepository{
 

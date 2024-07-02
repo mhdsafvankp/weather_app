@@ -10,7 +10,7 @@ import 'package:weather_app/application/blocs/auth_bloc/auth_state.dart';
 import 'package:weather_app/application/blocs/weather_bloc/weather_state.dart';
 import 'package:weather_app/presentation/widgets/custom_text_button.dart';
 import '../../domain/common/constants.dart';
-import '../../domain/weather/weather_model.dart';
+import '../../domain/weather/entities/weather_model.dart';
 import '../../routes/app_router.dart';
 import '../../application/blocs/auth_bloc/auth_event.dart';
 import '../widgets/submit_button.dart';

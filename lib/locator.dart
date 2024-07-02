@@ -8,7 +8,7 @@ import 'package:weather_app/application/blocs/weather_bloc/weather_bloc.dart';
 import 'package:weather_app/infrastructure/auth/firebase_auth_repository_impl.dart';
 
 import 'application/blocs/splash_bloc/splash_bloc.dart';
-import 'domain/weather/weather_model.dart';
+import 'domain/weather/entities/weather_model.dart';
 import 'infrastructure/core/dio_api_client.dart';
 import 'infrastructure/core/hive_service.dart';
 import 'infrastructure/location/location_repository_impl.dart';

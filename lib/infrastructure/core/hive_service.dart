@@ -1,8 +1,13 @@
 import 'package:hive/hive.dart';
-import 'package:weather_app/domain/common/logger.dart';
 
 
 /// A generic class for Hive Helper
+///
+/// openBox by [init] function
+///
+/// save by [saveData] function
+///
+/// get by [getData] function
 class HiveService<T>{
 
   final String boxName;
