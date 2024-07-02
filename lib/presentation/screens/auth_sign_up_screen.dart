@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/domain/common/validator.dart';
 import 'package:weather_app/application/blocs/auth_bloc/auth_event.dart';
 import 'package:weather_app/application/blocs/auth_bloc/auth_state.dart';
-import 'package:weather_app/presentation/snack_bars.dart';
+import 'package:weather_app/presentation/widgets/snack_bars.dart';
 import 'package:weather_app/presentation/widgets/custom_text_button.dart';
 import 'package:weather_app/presentation/widgets/custom_text_field.dart';
 import 'package:weather_app/presentation/widgets/submit_button.dart';
