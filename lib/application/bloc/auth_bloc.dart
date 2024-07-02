@@ -37,6 +37,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _signOutRequestHandler(
       SingOutRequested event, Emitter<AuthState> emit) async {
     await firebaseAuthRepositoryImpl.signOut();
+
+    // saving sign-in preference
+    firebaseAuthRepositoryImpl.setLoggedIn(false);
     emit(UnAuthenticated());
   }
 

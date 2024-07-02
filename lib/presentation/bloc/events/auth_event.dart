@@ -32,6 +32,7 @@ class SingUpRequested extends AuthEvent{
 
 
 class SingOutRequested extends AuthEvent{}
+
 class CheckAuthStatus extends AuthEvent{}
 
 

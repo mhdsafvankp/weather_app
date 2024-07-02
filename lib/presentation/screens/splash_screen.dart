@@ -41,6 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     AutoRouter.of(context).replace(AuthLoginRoute());
                   }
                 },
-                child: const Center(child: Text('Splash screen')))));
+                child: const Center(child: Text('Splash screen')))
+        ));
   }
 }
