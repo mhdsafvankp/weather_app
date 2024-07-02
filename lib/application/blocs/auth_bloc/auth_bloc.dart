@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/domain/Auth/auth_exceptions.dart';
 import 'package:weather_app/domain/common/app_exceptions.dart';
-import 'package:weather_app/presentation/bloc/events/auth_event.dart';
-import 'package:weather_app/presentation/bloc/states/auth_state.dart';
+import 'package:weather_app/application/blocs/auth_bloc/auth_event.dart';
+import 'package:weather_app/application/blocs/auth_bloc/auth_state.dart';
 
-import '../../infrastructure/auth/firebase_auth_repository_impl.dart';
+import '../../../infrastructure/auth/firebase_auth_repository_impl.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuthRepositoryImpl firebaseAuthRepositoryImpl;

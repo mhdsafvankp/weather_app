@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:weather_app/application/bloc/auth_bloc.dart';
-import 'package:weather_app/application/bloc/weather_bloc.dart';
+import 'package:weather_app/application/blocs/auth_bloc/auth_bloc.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_bloc.dart';
 import 'package:weather_app/infrastructure/auth/firebase_auth_repository_impl.dart';
 
-import 'application/bloc/splash_bloc.dart';
+import 'application/blocs/splash_bloc/splash_bloc.dart';
 import 'domain/weather/weather_model.dart';
 import 'infrastructure/core/dio_api_client.dart';
 import 'infrastructure/core/hive_service.dart';

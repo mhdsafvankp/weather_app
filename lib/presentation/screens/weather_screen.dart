@@ -3,17 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/application/bloc/auth_bloc.dart';
-import 'package:weather_app/application/bloc/weather_bloc.dart';
-import 'package:weather_app/domain/common/logger.dart';
-import 'package:weather_app/presentation/bloc/events/weather_event.dart';
-import 'package:weather_app/presentation/bloc/states/auth_state.dart';
-import 'package:weather_app/presentation/bloc/states/weather_state.dart';
+import 'package:weather_app/application/blocs/auth_bloc/auth_bloc.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_bloc.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_event.dart';
+import 'package:weather_app/application/blocs/auth_bloc/auth_state.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_state.dart';
 import 'package:weather_app/presentation/widgets/custom_text_button.dart';
 import '../../domain/common/constants.dart';
 import '../../domain/weather/weather_model.dart';
 import '../../routes/app_router.dart';
-import '../bloc/events/auth_event.dart';
+import '../../application/blocs/auth_bloc/auth_event.dart';
 import '../widgets/submit_button.dart';
 
 @RoutePage()

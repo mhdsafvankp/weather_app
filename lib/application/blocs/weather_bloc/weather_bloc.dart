@@ -1,11 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/domain/common/app_exceptions.dart';
-import 'package:weather_app/presentation/bloc/events/weather_event.dart';
-import 'package:weather_app/presentation/bloc/states/weather_state.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_event.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_state.dart';
 
-import '../../infrastructure/core/debounce.dart';
-import '../../infrastructure/location/location_repository_impl.dart';
-import '../../infrastructure/weather/weather_repository_impl.dart';
+import '../../../infrastructure/location/location_repository_impl.dart';
+import '../../../infrastructure/weather/weather_repository_impl.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
@@ -103,10 +102,15 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       var weather = await weatherRepositoryImpl.getCurrentLocationWeather(
           location.latitude, location.longitude);
       emit(WeatherLoaded(model: weather));
-    } on AppException catch (e){
-      emit(WeatherErrorState(msg: e.toString()));
     } catch (e) {
-      emit(WeatherErrorState(msg: AppException().message));
+      try {
+        var weather = await weatherRepositoryImpl.getLastSavedWeather();
+        emit(WeatherLoaded(model: weather));
+      } on AppException catch (e){
+        emit(WeatherErrorState(msg: e.toString()));
+      }catch (e){
+        emit(WeatherErrorState(msg: AppException().message));
+      }
     }
   }
 }

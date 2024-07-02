@@ -2,15 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/domain/common/validator.dart';
-import 'package:weather_app/locator.dart';
-import 'package:weather_app/presentation/bloc/events/auth_event.dart';
-import 'package:weather_app/presentation/bloc/states/auth_state.dart';
+import 'package:weather_app/application/blocs/auth_bloc/auth_event.dart';
+import 'package:weather_app/application/blocs/auth_bloc/auth_state.dart';
 import 'package:weather_app/presentation/snack_bars.dart';
 import 'package:weather_app/presentation/widgets/custom_text_button.dart';
 import 'package:weather_app/presentation/widgets/custom_text_field.dart';
 import 'package:weather_app/presentation/widgets/submit_button.dart';
 
-import '../../application/bloc/auth_bloc.dart';
+import '../../application/blocs/auth_bloc/auth_bloc.dart';
 import '../../domain/common/logger.dart';
 import '../../routes/app_router.dart';
 

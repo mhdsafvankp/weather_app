@@ -1,16 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/application/bloc/splash_bloc.dart';
-import 'package:weather_app/application/bloc/weather_bloc.dart';
-import 'package:weather_app/domain/common/logger.dart';
-import 'package:weather_app/presentation/bloc/events/auth_event.dart';
-import 'package:weather_app/presentation/bloc/events/splash_event.dart';
-import 'package:weather_app/presentation/bloc/events/weather_event.dart';
-import 'package:weather_app/presentation/bloc/states/auth_state.dart';
-import 'package:weather_app/presentation/bloc/states/splash_state.dart';
-import 'package:weather_app/presentation/bloc/states/weather_state.dart';
-import 'package:weather_app/routes/app_router.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_bloc.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_event.dart';
+import 'package:weather_app/application/blocs/weather_bloc/weather_state.dart';
 
 import '../../domain/common/constants.dart';
 import '../../infrastructure/core/debounce.dart';
