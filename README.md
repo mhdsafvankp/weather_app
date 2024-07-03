@@ -4,10 +4,11 @@ A weather detecting Flutter project.
 
 ## Getting Started
 
-This Weather App Aplication , here detect the current location weather 
-and we can search wether for a specified locations aswell
+This is a Weather App Aplication , 
+Here detect the current location weather 
+and we can search weather for a specified locations aswell.
 
-one Login is mandatory, if don't have account create it using email
+Login is mandatory, if don't have account create it using email
 
 A few resources to get you started if this is your first Flutter project:
 
