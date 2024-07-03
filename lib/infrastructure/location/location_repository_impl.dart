@@ -4,6 +4,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geolocator_platform_interface/src/models/position.dart';
 import 'package:weather_app/domain/location/location_repository.dart';
 
+
+/// Used to get the current location
 class LocationRepositoryImpl implements LocationRepository{
 
 

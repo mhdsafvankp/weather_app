@@ -2,12 +2,11 @@ import 'dart:io';
 
 import 'package:weather_app/domain/common/app_exceptions.dart';
 import 'package:weather_app/domain/weather/entities/weather_model.dart';
+import 'package:weather_app/domain/weather/repos/weather_repository.dart';
 import 'package:weather_app/infrastructure/weather/weather_local_data_source.dart';
 import 'package:weather_app/infrastructure/weather/weather_remote_data_source.dart';
 
-import '../../domain/weather/repos/weather_remote_repository.dart';
-
-class WeatherRepositoryImpl implements WeatherRemoteRepository {
+class WeatherRepositoryImpl implements WeatherRepository {
   WeatherLocalDataSource localDataSource;
   WeatherRemoteDataSource remoteDataSource;
 

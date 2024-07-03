@@ -7,6 +7,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     on<LoadSplashScreen>(_loadedSplashScreen);
   }
 
+  /// It handles the the [SplashScreen] loading time
   _loadedSplashScreen(LoadSplashScreen event, Emitter<SplashState> emit) async {
     // Simulate a delay for the splash screen
     await Future.delayed(const Duration(seconds: 1));
