@@ -4,6 +4,13 @@ import 'package:dio/dio.dart';
 import 'package:weather_app/domain/common/app_exceptions.dart';
 import 'package:weather_app/domain/common/logger.dart';
 
+
+///  DioClient
+///
+/// [getCall] - for making the GET request with queryParameters
+///
+/// if success, return the response,
+/// else [AppException]
 class DioApiClient {
   final Dio dio;
 
@@ -18,7 +25,10 @@ class DioApiClient {
       logPrint('queryParameters: $queryParameters');
       logPrint('============= REQUEST END ===========');
 
-      var response = await dio.get(url, queryParameters: queryParameters);
+      var response = await dio.get(url, queryParameters: queryParameters,
+          options: Options(validateStatus: (value) {
+        return true;   // will validate request codes separately
+      }));
 
       logPrint('============= RESPONSE START ===========');
       logPrint('Type: getCall');

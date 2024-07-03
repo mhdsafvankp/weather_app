@@ -16,17 +16,16 @@ import '../../routes/app_router.dart';
 
 @RoutePage()
 class AuthLoginScreen extends StatefulWidget {
-  AuthLoginScreen({Key? key}) : super(key: key);
+  const AuthLoginScreen({Key? key}) : super(key: key);
 
   @override
   State<AuthLoginScreen> createState() => _AuthLoginScreenState();
 }
 
 class _AuthLoginScreenState extends State<AuthLoginScreen> {
+
   final _formKey = GlobalKey<FormState>();
-
   final emailController = TextEditingController();
-
   final passController = TextEditingController();
 
   @override

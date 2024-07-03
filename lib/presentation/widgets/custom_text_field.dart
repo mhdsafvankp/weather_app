@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
         }
         return null; // Return null if the name is valid
       },
-      cursorColor: Colors.blue.shade200,
+      cursorColor: Colors.brown,
       cursorWidth: 1,
       controller: controller,
       decoration: InputDecoration(
@@ -34,7 +34,7 @@ class CustomTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(color: Colors.blue.shade200, width: 1.0),
+          borderSide: const BorderSide(color: Colors.brown, width: 1.0),
         ),
         fillColor: Colors.white,
       ),

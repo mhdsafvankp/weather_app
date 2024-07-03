@@ -118,9 +118,6 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
             } else if (state is SignUpCompleted) {
               _formKey.currentState?.reset();
               AutoRouter.of(context).maybePop();
-              // sending the sign up details into login screen
-              context.read<AuthBloc>().add(LoadSignInEvent(
-                  state.email, state.password));
             }
           },
         ));

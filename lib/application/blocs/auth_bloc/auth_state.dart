@@ -9,11 +9,7 @@ class AuthSignUpLoaded extends AuthState{
   final String password;
   AuthSignUpLoaded({required this.email, required this.password});
 }
-class AuthSignInLoaded extends AuthState{
-  final String email;
-  final String password;
-  AuthSignInLoaded({required this.email, required this.password});
-}
+
 class SignUpCompleted extends AuthState{
   final String email;
   final String password;

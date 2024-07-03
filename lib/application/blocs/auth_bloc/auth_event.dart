@@ -9,12 +9,6 @@ class SingInRequested extends AuthEvent{
   final String password;
 }
 
-class LoadSignInEvent extends AuthEvent{
-  final String email;
-  final String password;
-  LoadSignInEvent(this.email, this.password);
-}
-
 
 
 class LoadSignUpEvent extends AuthEvent{
