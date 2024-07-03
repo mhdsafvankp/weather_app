@@ -164,8 +164,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           ],
                         ),
                       );
-                    } else if (state is WeatherErrorState) {
-                      return Text(state.msg);
+                    }
+                    else if (state is WeatherErrorState) {
+                      return Center(child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(state.msg),
+                      ));
                     } else {
                       return const Column(
                         mainAxisSize: MainAxisSize.min,

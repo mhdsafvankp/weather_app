@@ -152,6 +152,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       var weather = await weatherRepositoryImpl.getCurrentLocationWeather(
           location.latitude, location.longitude);
       emit(WeatherLoaded(model: weather));
+    } on AppException catch (e){
+      emit(WeatherErrorState(msg: e.toString()));
     } catch (e) {
       try {
         var weather = await weatherRepositoryImpl.getLastSavedWeather();
